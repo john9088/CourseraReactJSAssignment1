@@ -1,38 +1,60 @@
 import React, {useState} from 'react'
-//import {Card, CardImg, CardImgOverlay, CardTitle, CardText} from 'reactstrap'
 import Dish from './DishdetailComponent'
+import Comments from './DishComments'
 
 const Menu = ({dishes}) =>{
 
-    const [menu, setMenu] = useState(null);
+    let [menu, setMenu] = useState(null);
+    let [selectedDish, setSelectedDish] = useState(null);
     
     let menuTemp = null
 
-    
-    const renderDish = (dishID) => {
-        const test = () => {
-            console.log("Hello")
-        }
+    const upDateDish = (dishToUpdate) => {
+        setSelectedDish(dishToUpdate)
+        menuTemp = dishes.map(dish => {
+            if(dish.id === dishToUpdate.id){
+                return <Dish
+                            key={dish.id} 
+                            onClick = {() => upDateDish(dish)}
+                            dishDetails={dish} 
+                            dishToUpdate={true}
+                        />
+            }
+                
+            else{
+                return <Dish
+                            key={dish.id} 
+                            onClick = {() => upDateDish(dish)}
+                            dishDetails={dish} 
+                            dishToUpdate={false}
+                        />
+            }
+        })
+        setMenu(menuTemp)
+    }
+    const renderDish = () => {
+        
         menuTemp = dishes.map(dish => 
-            <Dish 
-                onClick = {() => test()}
+            <Dish
+                key={dish.id} 
+                onClick = {() => upDateDish(dish)}
                 dishDetails={dish} 
-                dishToUpdate={dishID}
+                dishToUpdate={false}
             />)
         setMenu(menuTemp)
     }
     
     if(menu == null)
-        renderDish(null)
-    
+        renderDish()
+
     return(
         <div className="container">
             <div className="row">
                 {menu}
-                {/* <div class="col mt-5">
-                    <CardTitle className="row" heading>Comments</CardTitle>
-                    {comments}
-                </div> */}
+                <div className="col mt-5">
+                    <h4>Comments</h4>
+                    <Comments dishDetails={selectedDish} />
+                </div>
                 
             </div>
         </div>
