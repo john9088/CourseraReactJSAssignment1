@@ -1,20 +1,19 @@
-import React ,{useState} from 'react'
-import {Navbar, NavbarBrand} from 'reactstrap';
-import Menu from './components/MenuComponent';
-import {DISHES} from './shared/dishes'
+import React from 'react'
 
-function App() {
-  const [dishes, setDishes] = useState(DISHES)
-  
+import Main from './components/Main'
+import '../src/App.css'
+import {BrowserRouter} from 'react-router-dom'
+import {Provider} from 'react-redux'
+import {ConfigureStore} from './redux/configureStore'
+
+const store = ConfigureStore()
+function App() { 
   return (
-    <div className="App">
-      <Navbar dark color="primary">
-        <div className="container">
-          <NavbarBrand href="/">Assignment</NavbarBrand>
-        </div>
-      </Navbar>    
-      <Menu dishes={dishes}/>
-    </div>
+    <Provider store = {store}>
+      <BrowserRouter>
+        <Main/>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

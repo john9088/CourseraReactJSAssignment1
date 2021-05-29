@@ -1,41 +1,26 @@
 import React, {useState} from 'react'
-import Dish from './DishdetailComponent'
-import Comments from './DishComments'
+import SingleDish from './ViewSingleDish'
+import DishDetail from './DishdetailComponent'
 
-const Menu = ({dishes}) =>{
+const Menu = ({dishes,comments}) =>{
 
     let [menu, setMenu] = useState(null);
     let [selectedDish, setSelectedDish] = useState(null);
+    let [dishComment, setDishComment] = useState([]);
     
     let menuTemp = null
 
     const upDateDish = (dishToUpdate) => {
+        let dishID = dishToUpdate.id
+        let tempDishComments = comments.filter(comment => comment.dishId === dishID)
+        setDishComment(tempDishComments)
         setSelectedDish(dishToUpdate)
-        menuTemp = dishes.map(dish => {
-            if(dish.id === dishToUpdate.id){
-                return <Dish
-                            key={dish.id} 
-                            onClick = {() => upDateDish(dish)}
-                            dishDetails={dish} 
-                            dishToUpdate={true}
-                        />
-            }
-                
-            else{
-                return <Dish
-                            key={dish.id} 
-                            onClick = {() => upDateDish(dish)}
-                            dishDetails={dish} 
-                            dishToUpdate={false}
-                        />
-            }
-        })
-        setMenu(menuTemp)
     }
+
     const renderDish = () => {
         
         menuTemp = dishes.map(dish => 
-            <Dish
+            <SingleDish
                 key={dish.id} 
                 onClick = {() => upDateDish(dish)}
                 dishDetails={dish} 
@@ -51,11 +36,10 @@ const Menu = ({dishes}) =>{
         <div className="container">
             <div className="row">
                 {menu}
-                <div className="col mt-5">
-                    <h4>Comments</h4>
-                    <Comments dishDetails={selectedDish} />
-                </div>
-                
+                <DishDetail 
+                    dish={selectedDish===null?dishes[0]:selectedDish}
+                    dishComment={dishComment}
+                />
             </div>
         </div>
     )
