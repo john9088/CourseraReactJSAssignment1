@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
 import SingleDish from './ViewSingleDish'
 import DishDetail from './DishdetailComponent'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
-const Menu = ({dishes,comments}) =>{
+
+const Menu = ({dishes,comments}) => {
 
     let [menu, setMenu] = useState(null);
     let [selectedDish, setSelectedDish] = useState(null);
@@ -22,7 +25,7 @@ const Menu = ({dishes,comments}) =>{
         menuTemp = dishes.map(dish => 
             <SingleDish
                 key={dish.id} 
-                onClick = {() => upDateDish(dish)}
+                // onClick = {() => upDateDish(dish)}
                 dishDetails={dish} 
                 dishToUpdate={false}
             />)
@@ -35,9 +38,19 @@ const Menu = ({dishes,comments}) =>{
     return(
         <div className="container">
             <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>Menu</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>Menu</h3>
+                    <hr />
+                </div>
+            </div>
+            <div className="row">
                 {menu}
                 <DishDetail 
-                    dish={selectedDish===null?dishes[0]:selectedDish}
+                    dish={selectedDish===null?null:selectedDish}
                     dishComment={dishComment}
                 />
             </div>

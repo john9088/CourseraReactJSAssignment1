@@ -6,6 +6,7 @@ import Header from './HeaderComponent'
 import Footer from './FooterComponent'
 import Contact from './Contact'
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom'
+import DishDetail from './DishdetailComponent'
 import {connect} from 'react-redux'
 
 
@@ -31,12 +32,20 @@ const Main = ({dishes, promotion, leaders, comments}) =>{
         );
       }
 
+    const DishWithId = ({match}) => {
+        return(
+            <DishDetail dish={dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]}
+                        dishComment={comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
+        );
+    };
+
     return(
         <div className="App">   
             <Header />
                 <Switch>
                     <Route path='/home' component={HomePage}/>
                     <Route exact path='/menu' component={() => <Menu dishes={dishes} comments={comments}/> }/>
+                    <Route path='/menu/:dishId' component={DishWithId} />
                     <Route exact path='/contactus' component={Contact}/>
                     <Redirect to='/home'/>
                 </Switch>

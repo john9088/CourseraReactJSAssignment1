@@ -4,7 +4,6 @@ import { Card, CardImg, CardText, CardBody,
 
 const Home = ({dish, promotion, leader}) => {
     const RenderCard = ({item}) => {
-        
         return(
             <Card>
                 <CardImg src={item.image} alt={item.name} />
@@ -16,8 +15,7 @@ const Home = ({dish, promotion, leader}) => {
             </Card>
         )
     }
-
-
+    
     return(
         <div className='container'>
             <div className='row align-items-start'>

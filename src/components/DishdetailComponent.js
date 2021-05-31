@@ -1,11 +1,9 @@
 import React from 'react'
-import {Card, CardImg, CardImgOverlay, CardTitle, CardText} from 'reactstrap'
-
+import {Card, CardImg, CardImgOverlay, CardTitle, CardText, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 
 const DishDetail = ({dish, dishComment}) => {
-    // let dishComments = 
-    console.log(dish.id)
     if(dish === null)
         return(<div></div>)
     else{
@@ -32,23 +30,36 @@ const DishDetail = ({dish, dishComment}) => {
         }
 
         return(
-            <>
-                <div className="col-12 col-xs-12 col-sm-6 col-md-5 m-1">
-                    <Card>
-                        <CardImg width='100%' src={dish.image} alt={dish.name}/>   
-                        <CardImgOverlay>
-                            <CardTitle>{dish.name}</CardTitle>
-                        </CardImgOverlay>
-                    </Card>
-                    <Card>
-                        <CardText>{dish.description}</CardText>
-                    </Card>
+            <div className='container'>
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h3>{dish.name}</h3>
+                        <hr />
+                    </div>
                 </div>
-                <div className="col-12 col-xs-12 col-sm-6 col-md-5 mt-1">
-                    <h4>Comments</h4>
-                    {getComments()}
+                <div className="row">
+                    <div className="col-12 col-xs-12 col-sm-6 col-md-5 m-1">
+                        <Card>
+                            <CardImg width='100%' src={dish.image} alt={dish.name}/>
+                            <CardImgOverlay>
+                                <CardTitle>{dish.name}</CardTitle>
+                            </CardImgOverlay>
+                        </Card>
+                        <Card>
+                            <CardText>{dish.description}</CardText>
+                        </Card>
+                    </div>
+                    <div className="col-12 col-xs-12 col-sm-6 col-md-5 mt-1">
+                        <h4>Comments</h4>
+                        {getComments()}
+                    </div>
                 </div>
-            </>
+            </div>
         )
     }
         
